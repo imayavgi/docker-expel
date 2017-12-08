@@ -1,0 +1,64 @@
+$ docker-compose up
+Creating network "composedappmyfirst_default" with the default driver
+Building py-hw-sample-web
+Step 1/7 : FROM python:3.6.3-slim
+3.6.3-slim: Pulling from library/python
+Digest: sha256:7154bd1a5d4a4f64ca3ec1719906c9a60b64fbac0132fd485d640acb30f76399
+Status: Downloaded newer image for python:3.6.3-slim
+ ---> a79297999298
+Step 2/7 : WORKDIR /myapp
+ ---> 62e5ee103eb3
+Removing intermediate container 140678a4859e
+Step 3/7 : ADD . /myapp
+ ---> 37aed1c948b1
+Step 4/7 : RUN pip install --trusted-host pypi.python.org -r requirements.txt
+ ---> Running in 770af87b5035
+Collecting Flask (from -r requirements.txt (line 1))
+  Downloading Flask-0.12.2-py2.py3-none-any.whl (83kB)
+Collecting Redis (from -r requirements.txt (line 2))
+  Downloading redis-2.10.6-py2.py3-none-any.whl (64kB)
+Collecting itsdangerous>=0.21 (from Flask->-r requirements.txt (line 1))
+  Downloading itsdangerous-0.24.tar.gz (46kB)
+Collecting Werkzeug>=0.7 (from Flask->-r requirements.txt (line 1))
+  Downloading Werkzeug-0.12.2-py2.py3-none-any.whl (312kB)
+Collecting Jinja2>=2.4 (from Flask->-r requirements.txt (line 1))
+  Downloading Jinja2-2.10-py2.py3-none-any.whl (126kB)
+Collecting click>=2.0 (from Flask->-r requirements.txt (line 1))
+  Downloading click-6.7-py2.py3-none-any.whl (71kB)
+Collecting MarkupSafe>=0.23 (from Jinja2>=2.4->Flask->-r requirements.txt (line 1))
+  Downloading MarkupSafe-1.0.tar.gz
+Building wheels for collected packages: itsdangerous, MarkupSafe
+  Running setup.py bdist_wheel for itsdangerous: started
+  Running setup.py bdist_wheel for itsdangerous: finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/fc/a8/66/24d655233c757e178d45dea2de22a04c6d92766abfb741129a
+  Running setup.py bdist_wheel for MarkupSafe: started
+  Running setup.py bdist_wheel for MarkupSafe: finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/88/a7/30/e39a54a87bcbe25308fa3ca64e8ddc75d9b3e5afa21ee32d57
+Successfully built itsdangerous MarkupSafe
+Installing collected packages: itsdangerous, Werkzeug, MarkupSafe, Jinja2, click, Flask, Redis
+Successfully installed Flask-0.12.2 Jinja2-2.10 MarkupSafe-1.0 Redis-2.10.6 Werkzeug-0.12.2 click-6.7 itsdangerous-0.24
+ ---> 7a9e8a10b8fd
+Removing intermediate container 770af87b5035
+Step 5/7 : EXPOSE 80
+ ---> Running in 6d811fd7cf65
+ ---> f334e635e0ef
+Removing intermediate container 6d811fd7cf65
+
+Successfully built 36d329e7489c
+Successfully tagged composedappmyfirst_py-hw-sample-web:latest
+WARNING: Image for service py-hw-sample-web was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+Creating composedappmyfirst_redis_1 ... 
+Creating composedappmyfirst_py-hw-sample-web_1 ... 
+Creating composedappmyfirst_redis_1
+Creating composedappmyfirst_py-hw-sample-web_1 ... done
+Attaching to composedappmyfirst_redis_1, composedappmyfirst_py-hw-sample-web_1
+redis_1             | 1:C 01 Dec 16:19:08.142 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1             | 1:C 01 Dec 16:19:08.142 # Redis version=4.0.2, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1             | 1:C 01 Dec 16:19:08.142 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1             | 1:M 01 Dec 16:19:08.145 * Running mode=standalone, port=6379.
+redis_1             | 1:M 01 Dec 16:19:08.145 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1             | 1:M 01 Dec 16:19:08.145 # Server initialized
+redis_1             | 1:M 01 Dec 16:19:08.145 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+redis_1             | 1:M 01 Dec 16:19:08.145 * Ready to accept connections
+py-hw-sample-web_1  |  * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+

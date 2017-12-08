@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:3.5.13
+    volumes:
+      - /tmp/mdb-data:/data/db
+    expose:
+      - "27017"
+  node-app:
+    #image: message-app
+    build: .
+    #volumes:
+    #  - .:/Users/imayakulothungan/exper/docker/composed-nodemongodb-svc/messageApp
+    ports:
+      - "4000:1337"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URL=mongodb://mongo/messageApp
+#volumes:
+#  mongo-data:

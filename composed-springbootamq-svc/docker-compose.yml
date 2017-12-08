@@ -1,0 +1,37 @@
+version: '3'
+services:
+  activemq:
+    image: webcenter/activemq:latest
+    ports:
+      - 8161:8161
+      - 61616:61616
+      - 61613:61613
+    environment:
+      ACTIVEMQ_NAME: imaya-amq
+      ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT: 'True'
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+      ACTIVEMQ_CONFIG_QUEUES_request: request
+      ACTIVEMQ_USERS_myproducer: producerpassword
+      ACTIVEMQ_GROUPS_writes: myproducer
+      ACTIVEMQ_USERS_myconsumer: consumerpassword
+      ACTIVEMQ_GROUPS_reads: myconsumer
+    volumes:
+      - /tmp/activemq/data:/data/activemq
+      - /tmp/activemq/log:/var/log/activemq
+  producer-app:
+    #image: producer-app
+    build: producer-app
+    depends_on:
+     - "activemq"
+    ports:
+     - "8080:8080"
+    volumes:
+     - /Users/imayakulothungan/exper/docker/composed-pyrq-svc/rest-app:/myapp
+  consumer-app:
+    build: consumer-app
+    #image: consumer-app
+    depends_on:
+     - "activemq"
+    deploy:
+      replicas: 1
